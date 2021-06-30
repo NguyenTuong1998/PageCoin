@@ -3,6 +3,7 @@ import pc from "../../../Asset/signup.png";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { addUserAPI } from "./module/actions";
 class Register extends Component {
   check = Yup.object().shape({
     username: Yup.string().required("Required").min(5, "Too Short!"),
@@ -15,6 +16,7 @@ class Register extends Component {
 
   handSubmit = (user) => {
     console.log(user);
+    this.props.dispatch(addUserAPI(user, this.props.history));
   };
 
   render() {
@@ -40,6 +42,7 @@ class Register extends Component {
                   <Formik
                     onSubmit={this.handSubmit}
                     initialValues={{
+                      id: 0,
                       username: "",
                       password: "",
                       email: "",
@@ -50,11 +53,11 @@ class Register extends Component {
                       <Form>
                         <div className="row">
                           <div className="col-xs-12">
-                            <div className="col-lg-6 no-pl">
+                            <div className="col-xs-12">
                               <div className="form-group">
                                 <label className="form-label">User name</label>
                                 <div className="controls">
-                                  <input
+                                  <Field
                                     type="text"
                                     className="form-control"
                                     name="username"
@@ -71,56 +74,76 @@ class Register extends Component {
                                 </div>
                               </div>
                             </div>
-                            <div className="col-lg-6 no-pr">
+                            <div className="col-xs-12">
                               <div className="form-group">
                                 <label className="form-label">Email</label>
                                 <div className="controls">
-                                  <input
+                                  <Field
                                     type="text"
                                     className="form-control"
                                     name="email"
                                     placeholder="enter email"
                                     onChange={envent.handleChange}
                                   />
+                                  <ErrorMessage name="email">
+                                    {(msg) => (
+                                      <div className="text text-danger">
+                                        {msg}
+                                      </div>
+                                    )}
+                                  </ErrorMessage>
                                 </div>
                               </div>
                             </div>
-                            <div className="col-lg-6 no-pl">
+                            <div className="col-xs-12">
                               <div className="form-group">
                                 <label className="form-label">Password</label>
                                 <div className="controls">
-                                  <input
+                                  <Field
                                     type="password"
                                     className="form-control"
                                     name="password"
                                     placeholder="enter password"
                                     onChange={envent.handleChange}
                                   />
+                                  <ErrorMessage name="password">
+                                    {(msg) => (
+                                      <div className="text text-danger">
+                                        {msg}
+                                      </div>
+                                    )}
+                                  </ErrorMessage>
                                 </div>
                               </div>
                             </div>
-                            <div className="col-lg-6 no-pr">
+                            <div className="col-xs-12 ">
                               <div className="form-group">
                                 <label className="form-label">Phone</label>
                                 <div className="controls">
-                                  <input
+                                  <Field
                                     type="text"
                                     className="form-control"
                                     name="phone"
                                     placeholder="enter phone"
                                     onChange={envent.handleChange}
                                   />
+                                  <ErrorMessage name="phone">
+                                    {(msg) => (
+                                      <div className="text text-danger">
+                                        {msg}
+                                      </div>
+                                    )}
+                                  </ErrorMessage>
                                 </div>
                               </div>
                             </div>
                             <div className="pull-left">
-                              <Link
+                              <button
                                 className="btn btn-primary mt-10 btn-corner right-15"
                                 type="submit"
-                                onSubmit={this.handSubmit}
                               >
                                 Sign up
-                              </Link>
+                              </button>
                               <Link
                                 to="login"
                                 className="btn mt-10 ml-5 btn-corner signup"
